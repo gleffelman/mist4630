@@ -8,7 +8,7 @@ public class Article {
 	private int date;
 	private double validityRating;
 	private String partyAffected;
-	private char response;
+	private String response;
 	private String responseBy;
 	private String responseDesc;
 	
@@ -19,12 +19,12 @@ public class Article {
 		this.date = 0;
 		this.validityRating = 0;
 		this.partyAffected = "N";
-		this.response = 'N';
+		this.response = "N";
 		this.responseBy = "N";
 		this.responseDesc = "N";		
 	}
 	
-	public Article(int articleID, String title, String description, int date, double validityRating, String partyAffected, char response, String responseBy, String responseDesc) {
+	public Article(int articleID, String title, String description, int date, double validityRating, String partyAffected, String response, String responseBy, String responseDesc) {
 		this.articleID = articleID;
 		this.title = title;
 		this.description = description;
@@ -84,11 +84,11 @@ public class Article {
 		this.partyAffected = partyAffected;
 	}
 
-	public char getResponse() {
+	public String getResponse() {
 		return response;
 	}
 
-	public void setResponse(char response) {
+	public void setResponse(String response) {
 		this.response = response;
 	}
 
