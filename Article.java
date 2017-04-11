@@ -12,6 +12,18 @@ public class Article {
 	private String responseBy;
 	private String responseDesc;
 	
+	public Article() {
+		this.articleID = 0;
+		this.title = "N";
+		this.description = "N";
+		this.date = 0;
+		this.validityRating = 0;
+		this.partyAffected = "N";
+		this.response = 'N';
+		this.responseBy = "N";
+		this.responseDesc = "N";		
+	}
+	
 	public Article(int articleID, String title, String description, int date, double validityRating, String partyAffected, char response, String responseBy, String responseDesc) {
 		this.articleID = articleID;
 		this.title = title;
