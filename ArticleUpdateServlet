@@ -15,7 +15,7 @@ import dbHelpers.ArticleUpdateQuery;
 /**
  * Servlet implementation class UpdateBookServlet
  */
-@WebServlet(description = "Controller which starts the actual book update to the database", urlPatterns = { "/updateArticle" })
+@WebServlet(description = "Controller which starts the actual article update to the database", urlPatterns = { "/updateArticle" })
 public class ArticleUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
