@@ -1,0 +1,75 @@
+package controllers;
+
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import model.Article;
+import dbHelpers.ArticleUpdateQuery;
+
+/**
+ * Servlet implementation class UpdateBookServlet
+ */
+@WebServlet(description = "Controller which starts the actual book update to the database", urlPatterns = { "/updateArticle" })
+public class ArticleUpdateServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public ArticleUpdateServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		this.doPost(request, response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// get the form data and set up a Book object
+		int articleID = Integer.parseInt(request.getParameter("articleID"));
+		String title = request.getParameter("title");
+		String description = request.getParameter("description");
+		int date = Integer.parseInt(request.getParameter("date"));
+		Double validityRating = Double.parseDouble(request.getParameter("validityRating"));
+		String partyAffected = request.getParameter("partyAffected");
+		String response1 = request.getParameter("response");
+		String responseBy = request.getParameter("responseBy");
+		String responseDesc = request.getParameter("responseDesc");
+		
+		Article article = new Article();
+		article.setArticleID(articleID);
+		article.setTitle(title);
+		article.setDescription(description);
+		article.setDate(date);
+		article.setValidityRating(validityRating);
+		article.setPartyAffected(partyAffected);
+		article.setResponse(response1);
+		article.setResponseBy(responseBy);
+		article.setResponseDesc(responseDesc);
+		
+		// create an UpdateQuery object and use it to update the book
+		ArticleUpdateQuery uq = new ArticleUpdateQuery("scif_library", "root", "sql1123581321");
+		uq.doUpdate(article);
+		
+		// pass control on to the ReadServlet
+		String url = "/ArticleReadServlet";
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
+		dispatcher.forward(request, response);
+		
+	}
+
+}
