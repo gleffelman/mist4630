@@ -7,6 +7,14 @@ public class Source {
 	private String mediaCategory;
 	private String sourceLocation;
 	
+	public Source() {
+		this.sourceID = 0;
+		this.sourceName = "";
+		this.sourceGroup = "";
+		this.mediaCategory = "";
+		this.sourceLocation = "";
+	}
+	
 	public Source(int sourceID, String sourceName, String sourceGroup, String mediaCategory, String sourceLocation) {
 		this.sourceID = sourceID;
 		this.sourceName = sourceName; 
