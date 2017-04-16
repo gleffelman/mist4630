@@ -1,0 +1,70 @@
+package controllers;
+
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import dbHelpers.SourceAddQuery;
+import model.Source;
+
+/**
+ * Servlet implementation class AddServlet
+ */
+@WebServlet(description = "Controller for adding a new source to the database", urlPatterns = { "/addSource" })
+public class SourceAddServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public SourceAddServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doPost(request, response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// get the form data and set up an Source object
+		int sourceID = Integer.parseInt(request.getParameter("sourceID"));
+		String sourceName = request.getParameter("sourceName");
+		String sourceGroup = request.getParameter("sourceGroup");
+		String mediaCategory = request.getParameter("mediaCatogory");
+		String sourceLocation = request.getParameter("sourceLocation");
+		
+		Source source = new Source();
+		source.setSourceID(sourceID);
+		source.setSourceName(sourceName);
+		source.setSourceGroup(sourceGroup);
+		source.setMediaCategory(mediaCategory);
+		source.setSourceLocation(sourceLocation);
+	    
+		// set up an addQuery object
+	    SourceAddQuery aq = new SourceAddQuery("scif_library", "root", "sql1123581321");
+	    
+		// pass the book to addQuery to add to the database
+	    aq.doAdd(source);
+	    
+		// pass execution control to the ReadServlet
+	    String url = "/SourceReadServlet";
+	    
+	    RequestDispatcher dispatcher = request.getRequestDispatcher(url);
+	    dispatcher.forward(request, response);
+	    
+		
+	}
+
+}
