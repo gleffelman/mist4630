@@ -1,16 +1,22 @@
 package controllers;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+//import dbHelpers.DeleteQuery;
+import dbHelpers.UserDeleteQuery;
+import model.User;
+
 /**
- * Servlet implementation class UserDeleteServlet
+ * Servlet implementation class DeleteUserServlet
  */
-@WebServlet("/UserDeleteServlet")
+@WebServlet("/delete")
 public class UserDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -18,7 +24,7 @@ public class UserDeleteServlet extends HttpServlet {
      * @see HttpServlet#HttpServlet()
      */
     public UserDeleteServlet() {
-        super();
+    	super();
         // TODO Auto-generated constructor stub
     }
 
@@ -26,7 +32,7 @@ public class UserDeleteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		 doPost(request, response);
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
@@ -34,8 +40,26 @@ public class UserDeleteServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		//get the email
+		String email = String(request.getParameter("email"));
+		//create a deleteUser object
+		UserDeleteQuery du = new UserDeleteQuery("fakenews", "root", "root");
+		//use deleteQuery to delete the record
+		du.doDelete(email);
+		//pass execution on to the ReadUserServlet
+		String url = "/read";
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
+		
+		dispatcher.forward(request, response);
+		
 		doGet(request, response);
 	}
+
+	private String String(String parameter) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }
