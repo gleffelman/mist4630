@@ -1,16 +1,22 @@
 package controllers;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
+import dbHelpers.UserUpdateQuery;
+import model.User;
+
 /**
- * Servlet implementation class UserUpdateServlet
+ * Servlet implementation class UpdateUserServlet
  */
-@WebServlet("/UserUpdateServlet")
+@WebServlet("/update")
 public class UserUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -18,7 +24,7 @@ public class UserUpdateServlet extends HttpServlet {
      * @see HttpServlet#HttpServlet()
      */
     public UserUpdateServlet() {
-        super();
+    	super();
         // TODO Auto-generated constructor stub
     }
 
@@ -26,16 +32,28 @@ public class UserUpdateServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		this.doPost(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		String email = request.getParameter("email");
+		String upwd = request.getParameter("upwd");
+		
+		
+		User user = new User();
+		user.setEmail(email);
+		user.setUpwd(upwd);
+		
+		UserUpdateQuery uu = new UserUpdateQuery("fakenews", "root", "root");
+		uu.doUpdate(user);
+		
+		String url = "/read";
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
+		dispatcher.forward(request, response);
 	}
 
 }
